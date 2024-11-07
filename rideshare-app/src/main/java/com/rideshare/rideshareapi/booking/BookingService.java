@@ -153,5 +153,25 @@ public class BookingService {
     public void cancelBooking(Long passengerId, Long bookingId) {
         Passenger passenger=getPassenger(passengerId);
         Booking booking=getBooking(passengerId,bookingId);
+        cancelByPassenger(passenger,booking);
+        bookingRepository.save(booking);
+
+    }
+
+    private void cancelByPassenger(Passenger passenger,Booking booking){
+        try {
+                if(booking.getBookingStatus().equals(BookingStatus.ASSIGNING_DRIVER)|| booking.getBookingStatus().equals(BookingStatus.REACHING_PICKUP_LOCATION)||
+                    booking.getBookingStatus().equals(BookingStatus.SCHEDULED)|| booking.getBookingStatus().equals(BookingStatus.CAB_ARRIVED)){
+                        throw new InvalidActionForBookingStateException("Can not cancel the booking now.");
+                }
+                booking.setBookingStatus(BookingStatus.CANCELLING);
+                booking.setDriver(null);
+                booking.getNotifiedDrivers().clear();
+        }
+        catch (Exception e){
+            notificationService.notify(passenger.getPhoneNumber()
+            ,"Can not cancel the booking now. If the ride is in progress, ask your driver to end the ride");
+            throw e;
+        }
     }
 }

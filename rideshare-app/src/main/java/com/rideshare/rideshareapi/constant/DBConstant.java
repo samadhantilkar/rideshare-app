@@ -1,4 +1,4 @@
-package com.rideshare.rideshareapi.bdconstant;
+package com.rideshare.rideshareapi.constant;
 
 import com.rideshare.rideshareapi.comman.model.BaseEntity;
 import lombok.*;

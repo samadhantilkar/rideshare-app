@@ -15,5 +15,4 @@ import javax.persistence.Table;
 public class OTP extends BaseEntity {
     private String code;
     private String sendToNumber;
-
 }

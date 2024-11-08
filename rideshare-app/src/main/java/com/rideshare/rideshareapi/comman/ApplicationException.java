@@ -1,6 +1,5 @@
-package com.rideshare.rideshareapi.comman.model;
+package com.rideshare.rideshareapi.comman;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @ControllerAdvice

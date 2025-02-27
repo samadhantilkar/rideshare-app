@@ -3,6 +3,7 @@ package com.rideshare.rideshareapi.passenger;
 import com.rideshare.rideshareapi.booking.Booking;
 import com.rideshare.rideshareapi.booking.BookingService;
 import com.rideshare.rideshareapi.booking.BookingServiceImpl;
+import com.rideshare.rideshareapi.booking.DTO.UpdateRouteRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class PassengerController {
     @PatchMapping("{passengerId}/bookings/{bookingId}")
     public void updateRoute(@PathVariable(name = "passengerId") Long passengerId,
                             @PathVariable(name = "bookingId") Long bookingId,
-                            @RequestBody Booking data){
+                            @RequestBody UpdateRouteRequestDTO data){
         bookingService.updateRoute(passengerId,bookingId,data);
     }
 

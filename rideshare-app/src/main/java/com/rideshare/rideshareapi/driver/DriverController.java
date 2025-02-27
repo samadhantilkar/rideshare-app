@@ -1,26 +1,31 @@
 package com.rideshare.rideshareapi.driver;
 
 import com.rideshare.rideshareapi.booking.BookingService;
+import com.rideshare.rideshareapi.booking.BookingServiceImpl;
 import com.rideshare.rideshareapi.booking.DTO.RideRateRequestDTO;
-import com.rideshare.rideshareapi.booking.Review.Review;
 import com.rideshare.rideshareapi.driver.DTO.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/driver")
+@RequiredArgsConstructor
 public class DriverController {
     private final DriverService driverService;
     private final BookingService bookingService;
-    public DriverController(DriverService driverService,BookingService bookingService) {
-        this.driverService = driverService;
-        this.bookingService=bookingService;
-    }
 
     @GetMapping("/{driverId}")
     public DriverDetailResponseDTO getDriverDetail(@PathVariable(name = "driverId")Long driverId){
         return driverService.getDriverDetail(driverId);
+    }
+
+    @PatchMapping("/{driverId}")
+    public ResponseEntity<ChangeAvailabilityResponseDTO> changeAvailability(@PathVariable(name = "driverId") Long driverId, @RequestBody ChangeAvailabilityRequestDTO changeAvailabilityRequestDTO){
+        ChangeAvailabilityResponseDTO changeAvailabilityResponseDTO= driverService.changeAvailability(driverId,changeAvailabilityRequestDTO);
+        return ResponseEntity.ok(changeAvailabilityResponseDTO);
     }
 
     @GetMapping("{driverId}/bookings")

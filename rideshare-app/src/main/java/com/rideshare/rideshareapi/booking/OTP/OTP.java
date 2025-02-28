@@ -3,8 +3,7 @@ package com.rideshare.rideshareapi.booking.OTP;
 import com.rideshare.rideshareapi.comman.model.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "opt")

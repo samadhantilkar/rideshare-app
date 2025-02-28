@@ -3,9 +3,7 @@ package com.rideshare.rideshareapi.Location;
 import com.rideshare.rideshareapi.comman.model.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Builder

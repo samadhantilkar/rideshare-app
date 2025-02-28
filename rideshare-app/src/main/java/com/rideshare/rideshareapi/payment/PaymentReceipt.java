@@ -3,10 +3,7 @@ package com.rideshare.rideshareapi.payment;
 import com.rideshare.rideshareapi.comman.model.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Builder

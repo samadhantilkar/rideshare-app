@@ -7,18 +7,76 @@ import java.util.Set;
 
 public class QuadTreeNode {
 
+    /**
+     * Represents the whole rectangle of this node
+     * ---------
+     * |       |
+     * |       |
+     * |       |
+     * ---------
+     */
     protected Rectangle2D.Double mBound;
+    /**
+     * Represents the top left node of this node
+     * ---------
+     * | x |   |
+     * |---|---|
+     * |   |   |
+     * ---------
+     */
     protected QuadTreeNode mTopLeftNode;
+    /**
+     * Represents the top right node of this node
+     * ---------
+     * |   | x |
+     * |---|---|
+     * |   |   |
+     * ---------
+     */
     protected QuadTreeNode mTopRightNode;
+    /**
+     * Represents the bottom left node of this node
+     * ---------
+     * |   |   |
+     * |---|---|
+     * | x |   |
+     * ---------
+     */
     protected QuadTreeNode mBottomLeftNode;
+    /**
+     * Represents the bottom right node of this node
+     * ---------
+     * |   |   |
+     * |---|---|
+     * |   | x |
+     * ---------
+     */
     protected QuadTreeNode mBottomRightNode;
 
+    /**
+     * List of points of interest A.K.A neighbours inside this node
+     * this list is only filled in the deepest nodes
+     */
     protected List<Neighbour> mNeighbours=new ArrayList<>();
 
+    /**
+     * Creates a new node
+     *
+     * @param latitude       node's Y start point
+     * @param longitude      node's X start point
+     * @param latitudeRange  node's height
+     * @param longitudeRange node's width
+     */
     public QuadTreeNode(double latitude,double longitude,double latitudeRange,double longitudeRange){
         mBound=new Rectangle2D.Double(longitude,latitude,longitudeRange,latitudeRange);
     }
 
+    /**
+     * Adds a neighbour in the quadtree.
+     * This method will navigate and create nodes if necessary, until the smallest (deepest) node is reached
+     *
+     * @param neighbour
+     */
     public void addNeighbour(Neighbour neighbour,double deepestNodeSize){
         double halfSize=mBound.width * .5f;
 
@@ -31,22 +89,13 @@ public class QuadTreeNode {
         node.addNeighbour(neighbour,deepestNodeSize);
     }
 
-    private void addNeighbours(boolean contains,Set<Neighbour> neighbourSet,Rectangle2D.Double rangeAsRectangle){
-        if(contains){
-            neighbourSet.addAll(mNeighbours);
-            return;
-        }
-        findAll(neighbourSet,rangeAsRectangle);
-    }
 
-    private void findAll(Set<Neighbour> neighbourSet,Rectangle2D.Double rangeAsRectangle){
-        for(Neighbour neighbour: mNeighbours){
-            if(rangeAsRectangle.contains(neighbour.getLongitude(),neighbour.getLatitude())){
-                neighbourSet.add(neighbour);
-            }
-        }
-    }
-
+    /**
+     * Removes a neighbour from the quadtree
+     *
+     * @param id the neighbour's id
+     * @return if the neighbour existed and was removed
+     */
     public boolean removeNeighbour(Long id){
 
         for(Neighbour neighbour:mNeighbours){
@@ -83,6 +132,42 @@ public class QuadTreeNode {
         return false;
     }
 
+    /**
+     * Adds neighbours to the found set
+     *
+     * @param contains         if the rangeAsRectangle is contained inside the node
+     * @param neighborSet      a set to be filled by this method
+     * @param rangeAsRectangle the area of interest
+     */
+    private void addNeighbours(boolean contains,Set<Neighbour> neighbourSet,Rectangle2D.Double rangeAsRectangle){
+        if(contains){
+            neighbourSet.addAll(mNeighbours);
+            return;
+        }
+        findAll(neighbourSet,rangeAsRectangle);
+    }
+
+    /**
+     * If the rangeAsRectangle is not contained inside this node we must
+     * search for neighbours that are contained inside the rangeAsRectangle
+     *
+     * @param neighborSet      a set to be filled by this method
+     * @param rangeAsRectangle the area of interest
+     */
+    private void findAll(Set<Neighbour> neighbourSet,Rectangle2D.Double rangeAsRectangle){
+        for(Neighbour neighbour: mNeighbours){
+            if(rangeAsRectangle.contains(neighbour.getLongitude(),neighbour.getLatitude())){
+                neighbourSet.add(neighbour);
+            }
+        }
+    }
+
+    /**
+     * Recursively search for neighbours inside the given rectangle
+     *
+     * @param neighbourSet     a set to be filled by this method
+     * @param rangeAsRectangle the area of interest
+     */
     public void findNeighboursWithinRectangle(Set<Neighbour> neighbourSet,Rectangle2D.Double rangeAsRectangle){
         boolean end;
 

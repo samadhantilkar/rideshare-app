@@ -8,8 +8,7 @@ import com.rideshare.rideshareapi.comman.model.BaseEntity;
 import com.rideshare.rideshareapi.comman.model.Gender;
 import lombok.*;
 
-import javax.persistence.*;
-import java.awt.print.Book;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

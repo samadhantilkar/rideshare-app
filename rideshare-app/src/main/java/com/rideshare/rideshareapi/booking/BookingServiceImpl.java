@@ -43,13 +43,7 @@ public class BookingServiceImpl implements BookingService {
     private final ModelMapper modelMapper;
     private final ReviewRepository reviewRepository;
 
-    private Passenger getPassenger(Long passengerId){
-        Optional<Passenger> optionalPassenger=passengerRepository.findById(passengerId);
-        if(optionalPassenger.isEmpty()){
-            throw new InvalidPassengerException("No passenger With Id:"+passengerId);
-        }
-        return optionalPassenger.get();
-    }
+
 
     @Override
     public RequestBookingResponseDTO requestBooking(Long passengerId,RequestBookingRequestDTO requestDTO){
@@ -134,13 +128,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-    private boolean canChangeRoute(Booking booking){
-        return booking.getBookingStatus().equals(BookingStatus.ASSIGNING_DRIVER)||
-                booking.getBookingStatus().equals(BookingStatus.CAB_ARRIVED)||
-                booking.getBookingStatus().equals(BookingStatus.IN_RIDE)||
-                booking.getBookingStatus().equals(BookingStatus.SCHEDULED)||
-                booking.getBookingStatus().equals(BookingStatus.REACHING_PICKUP_LOCATION);
-    }
 
     @Override
     public void retryBooking(Long passengerId, Long bookingId) {
@@ -298,5 +285,21 @@ public class BookingServiceImpl implements BookingService {
         booking.setReviewByDriver(review);
         reviewRepository.save(review);
         bookingRepository.save(booking);
+    }
+
+    private boolean canChangeRoute(Booking booking){
+        return booking.getBookingStatus().equals(BookingStatus.ASSIGNING_DRIVER)||
+                booking.getBookingStatus().equals(BookingStatus.CAB_ARRIVED)||
+                booking.getBookingStatus().equals(BookingStatus.IN_RIDE)||
+                booking.getBookingStatus().equals(BookingStatus.SCHEDULED)||
+                booking.getBookingStatus().equals(BookingStatus.REACHING_PICKUP_LOCATION);
+    }
+
+    private Passenger getPassenger(Long passengerId){
+        Optional<Passenger> optionalPassenger=passengerRepository.findById(passengerId);
+        if(optionalPassenger.isEmpty()){
+            throw new InvalidPassengerException("No passenger With Id:"+passengerId);
+        }
+        return optionalPassenger.get();
     }
 }

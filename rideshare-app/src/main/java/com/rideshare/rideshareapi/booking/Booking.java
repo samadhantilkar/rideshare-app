@@ -9,7 +9,7 @@ import com.rideshare.rideshareapi.passenger.Passenger;
 import com.rideshare.rideshareapi.payment.PaymentReceipt;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.*;
 
 @Entity

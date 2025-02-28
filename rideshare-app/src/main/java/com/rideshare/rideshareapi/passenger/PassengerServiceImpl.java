@@ -28,8 +28,8 @@ public class PassengerServiceImpl implements PassengerService{
 
     @Override
     public List<Booking> getAllBooking(Long passengerId) {
-        List<Booking> bookings=passengerRepository.findByBookings(passengerId);
-        return bookings;
+//        List<Booking> bookings=passengerRepository.findByBookings(passengerId);
+        return null;
     }
 
     @Override

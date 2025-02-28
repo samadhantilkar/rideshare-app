@@ -6,15 +6,15 @@ import java.util.Set;
 
 public class QuadTree {
 
-    public static final int TOTAL_X_DEGREE=360;
-    public static final int TOTAL_Y_DEGREE=180;
+    public static final int TOTAL_X_DEGREES =360;
+    public static final int TOTAL_Y_DEGREES =180;
     public static final int NORMALIZE_X=180;
     public static final int NORMALIZE_Y=90;
 
     private QuadTreeNode mRootNode;
 
     public QuadTree(){
-        mRootNode=new QuadTreeNode(0,0,TOTAL_Y_DEGREE,TOTAL_X_DEGREE);
+        mRootNode=new QuadTreeNode(0,0, TOTAL_Y_DEGREES, TOTAL_X_DEGREES);
     }
 
     public QuadTree(QuadTreeNode rootNode){
@@ -49,6 +49,10 @@ public class QuadTree {
         return neighboursIds;
     }
 
+    protected QuadTreeNode getRootNode(){
+        return mRootNode;
+    }
+
     private double normalizeLatitude(double latitude){
         return latitude+NORMALIZE_Y;
     }
@@ -61,7 +65,7 @@ public class QuadTree {
 
         return new Rectangle2D.Double(Math.max(longitude-range,0),
                 Math.max(latitude-range,0),
-                Math.max(range*2,TOTAL_X_DEGREE),
-                Math.max(range*2,TOTAL_Y_DEGREE));
+                Math.max(range*2, TOTAL_X_DEGREES),
+                Math.max(range*2, TOTAL_Y_DEGREES));
     }
 }

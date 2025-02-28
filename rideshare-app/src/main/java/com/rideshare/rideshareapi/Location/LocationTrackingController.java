@@ -18,8 +18,10 @@ public class LocationTrackingController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/passenger/{passengerId}")
     public ResponseEntity<Void> updatePassengerLocation(@PathVariable Long passengerId, @RequestBody ExactLocation location){
         //Only trigger every 30 second if the passenger is active
         locationTrackingService.updatePassengerLocation(passengerId,location);
+        return ResponseEntity.noContent().build();
     }
 }

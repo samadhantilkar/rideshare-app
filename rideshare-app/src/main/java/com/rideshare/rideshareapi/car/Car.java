@@ -4,7 +4,7 @@ import com.rideshare.rideshareapi.comman.model.BaseEntity;
 import com.rideshare.rideshareapi.driver.Driver;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Builder

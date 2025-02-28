@@ -9,7 +9,7 @@ import com.rideshare.rideshareapi.comman.model.Gender;
 import com.rideshare.rideshareapi.account.Account;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
